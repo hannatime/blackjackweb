@@ -1,0 +1,33 @@
+<h4>Hi <%=session[:player_name].capitalize%></h4>
+
+Your cards are:
+<ul>
+<%session[:player_cards].each do |card|%>
+  <li> <%=card.to_s%> </li>
+<%end%>
+</ul>
+Your total is <%=calculate_total(session[:player_cards])%>
+
+<br>
+The dealer has:
+<ul>
+<%session[:dealer_cards].each do |card|%>
+  <li><%=card.to_s%></li>
+<%end%>
+</ul>
+His total is <%=calculate_total(session[:dealer_cards])%>
+Card count is <%=session[:deck].count%>
+<br>
+What would you like to do?
+<br>
+<br>
+
+<form action = '/hit' method ='post'>
+<input type ='submit' value ='hit' class ='btn btn-success btn-large' name ='hit'/ class ='btn btn-primary'>
+</form>
+
+<form action = '/stay' method ='post'>
+<input type ='submit' value ='stay' class ='btn btn-success btn-large' name ='stay'/ class ='btn btn-primary'>
+</form>
+
+
