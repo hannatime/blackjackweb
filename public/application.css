@@ -1,0 +1,25 @@
+
+/* global body */
+body{
+  background-color: #2F4F4F;
+  color: white;
+}
+
+/* text input on set_name page */
+.inputname{
+  background-color: grey
+}
+
+/* hit and stay buttons */
+.inputname{
+.hitform{
+  display:inline;
+  width: 6em;
+}
+.hitform input{
+  width: 6em;
+}
+
+.well .ul .li{
+  color:black;
+}
