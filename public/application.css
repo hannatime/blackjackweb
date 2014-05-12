@@ -1,25 +1,104 @@
 
 /* global body */
 body{
+  background-image:url("/images/felt.jpg");
   background-color: #2F4F4F;
+  padding: 1em;
   color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+#new_game{
+  margin-left: 1em;
+}
+#new_player{
+  margin-left: 1em;
+}
+.alert{
+  margin-top: 1em;
+  width: 35.5em;
+}
+.text_box{
+padding:0.5em;
+background-color:white;
+border-radius:5px;
+color: black;
+width: 38em;
+height: 100%;
+}
+
+.front_page{
+position:relative;
+width: 20em;
+margin-top: 1em;
+}
+
+.next{display: inline;
+float: right;}
+
+.well{
+padding: 0;
+padding-left: 0.5em;
+padding-right: 0.5em;
+padding-bottom: 0.5em;
+width: 38em;
 }
 
 /* text input on set_name page */
-.inputname{
-  background-color: grey
+.name_value{
+  display: inline;
 }
 
-/* hit and stay buttons */
-.inputname{
+.name_btn{
+  display: inline;
+}
+.card_image{v
+margin-left:0.1em; 
+margin-right:0.1em;
+height:10em;
+
+}
+h4{
+  color: white;
+  margin-top:;
+}
+
+h5{
+  color: black;
+}
+
 .hitform{
-  display:inline;
-  width: 6em;
-}
-.hitform input{
-  width: 6em;
+margin-bottom: -2em;
 }
 
-.well .ul .li{
+form#hit{
+  display: inline;
+  
+}
+form#hit input{
+  width:5em;
+  margin-bottom:1em;
+}
+form#stay{
+  display: inline;
+}
+
+form#stay input{
+  width:5em;
+  margin-bottom:1em;
+}
+
+.li{
   color:black;
+
+}
+
+#bet_val{
+display: inline;
+width:6em;
+}
+
+#bet_btn{
+margin-top: -0.5em;
+display: inline;
 }

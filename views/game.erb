@@ -1,56 +1,63 @@
-<h4>Hi <%=session[:player_name]%></h4>
+<%if @show_everything%>
+<div class = "well">
+  <h5>Dealer Cards</h5>
+  <%if !@stay%>
+  <img src='/images/cards2/cover.png' class = 'card_image'>
+  <%=card_image(session[:dealer_cards][1])%>
+<%end%>
+<%if @stay%>
+  <%session[:dealer_cards].each do |card|%>
+  <%=card_image(card)%>
+<%end%>
+<%end%>
+</div>
 
-Your cards are:
-<ul>
+<div class = "well">
+  <h5>Player Cards</h5>
 <%session[:player_cards].each do |card|%>
-  <li> <%=card.to_s%> </li>
+  <%=card_image(card)%>
 <%end%>
-</ul>
-<br>
-The dealer has:
+</div>
 
-<ul>
-<%session[:dealer_cards].each do |card|%>
-  <li><%=card.to_s%></li>
-<%end%>
-</ul>
-
-Your total is <%=calculate_total(session[:player_cards])%><br>
-The dealer has <%=calculate_total(session[:dealer_cards])%><br>
-<br>
-<%if @time_to_bet == false%>
+<div class = "text_box">
+Your total is <%=calculate_total(session[:player_cards])%>, the dealer has <%=calculate_total(session[:dealer_cards])%>
 Your bet is $<%=session[:bet_amount].to_s%>.
 <%end%>
-
 <%if @show_player_account%>
-You have $<%=session[:player_account]%> in the bank.
+<br>You have $<%=session[:player_account]%> in the bank.
 <%end%>
+<br>
 
-<%if @time_to_bet%>
-You have $<%=session[:player_account]%> in the bank.
-Your current bet is <%=session[:bet_amount]%>
-<form action = '/bet2' method ='post'>
-  New Bet Amount:<input type ='text' class = 'hitform inputname' name ='bet_amount'/>
-<br/>
-<input type ='submit' class ='hitform btn btn-small btn-success'>
+<%if @play_again%>
+<form action = '/new_game' method ='post' class = ''>
+<input type ='submit' value ='PLAY AGAIN' class ='btn btn-success btn-small' name ='new_game'>
 </form>
-<%end%>
+<%end%>   
 
 <%if @dealer_turn_button%>
 Click next for the dealers turn
-<form action = '/dealer_turn' method ='post' id = 'dealer_turn' class = 'hitform'>
-<input type ='submit' value ='Next' class ='btn btn-success btn-small' name ='dealer_turn'>
+<form action = '/dealer_turn' method ='post' id = 'dealer_turn' class = ''>
+<input type ='submit' value ='Next' class ='btn btn-success btn-small hitform' name ='dealer_turn'>
 </form>
 <%end%>
 
 <%if @show_hit_or_stay_buttons%>
-What would you like to do?
+What would you like to do?<br>
 <form action = '/hit' method ='post' id = 'hit' class = 'hitform'>
-<input type ='submit' value ='hit' class ='btn btn-success btn-small' name ='hit'>
+<input type ='submit' value ='HIT' class ='btn btn-success btn-small' name ='hit'>
 </form>
 
 <form action = '/stay' method ='post' id = 'stay' class = 'hitform'>
-<input type ='submit' value ='stay' class ='btn btn-success btn-small' name ='stay'>
+<input type ='submit' value ='STAY' class ='btn btn-success btn-small' name ='stay'>
 </form>
 <%end%>
 
+<%if @time_to_bet%>
+ <br>New Bet Amount:
+<form action = '/bet2' method ='post'>
+<input type ='text' class = 'hitform inputname' name ='bet_amount' id = 'bet_val'/>
+<br/>
+<input type ='submit' value = 'CHANGE BET'id = 'bet_btn' class ='hitform btn btn-small btn-success'>
+</form>
+<%end%>
+</div>

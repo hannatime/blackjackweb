@@ -12,26 +12,30 @@
         <div class="container">
             <ul class="nav">
               <%if @new_game_button%>
-              <li><form action = '/new_game' method ='post' id = 'new_game' class = 'hitform'>
-<input type ='submit' value ='New Game' class ='btn btn-success btn-small' name ='new_game'>
+<li><form action = '/new_game' method ='post' id = 'new_game' class = 'hitform new_game'>
+<input type ='submit' value ='PLAY AGAIN' class ='btn btn-success btn-small' name ='new_game'>
+</form></li>
+<%end%>   
+
+<%if @new_player_button%>
+<li><form action = '/new_player' method ='post' id = 'new_player' class = 'hitform'>
+<input type ='submit' value ='NEW PLAYER' class ='btn btn-success btn-small' name ='new_player'>
 </form></li>
 <%end%>
-              <li><form action = '/new_player' method ='post' id = 'new_player' class = 'hitform'>
-<input type ='submit' value ='New Player' class ='btn btn-success btn-small' name ='new_player'>
-</form></li>
             </ul>
         </div>
       </div>
     </div>
 
   <div class="container">
+    <%= yield %>
     <%if @error %>
       <div class="alert alert-error"><%=@error%></div>
     <% end %>
     <%if @success%>
       <div class="alert alert-success"><%=@success%></div>
     <% end %>
-      <%= yield %>
+  <img src="/images/background/blackjack.png" class = 'front_page'>
   </div>
   </body>
 </html>

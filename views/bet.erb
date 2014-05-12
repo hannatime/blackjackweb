@@ -1,11 +1,8 @@
-<div class = 'main'>
-
-<h4>You have $<%=session[:player_account]%> in the bank. Place your bet for this round.</h4>
-
+<h4>Hi <%=session[:player_name]%>, you have $<%=session[:player_account]%> to play with.</h4>
+Place your bet for this round.
 <form action = '/bet' method ='post'>
-  Bet Amount:<input type ='text' class = 'hitform inputname' name ='bet_amount'/>
+<input type ='text' class = 'hitform inputname' name ='bet_amount'/>
 <br/>
-<input type ='submit' class ='hitform btn btn-medium btn-danger'>
+<input type ='submit' value = 'BET'class ='hitform btn btn-medium btn-danger'>
 </form>
 
-</div>
