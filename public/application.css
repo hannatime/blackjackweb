@@ -1,7 +1,8 @@
 
 /* global body */
 body{
-  background-image:url("/images/felt.jpg");
+  background-image:url("/images/felt.png");
+  background-size: 130%;
   background-color: #2F4F4F;
   padding: 1em;
   color: white;
@@ -10,11 +11,11 @@ body{
 }
 #new_game{
   margin-left: 1em;
-  margin-top: 0.45em;
+  margin-top: 0.2em;
 }
 #new_player{
   margin-left: 1em;
-  margin-top: 0.45em;
+  margin-top: 0.2em;
 }
 .alert{
   margin-top: 1em;
@@ -36,8 +37,7 @@ margin-top: 1em;
 }
 
 .next2{
-  margin-top:-1.6em;
-  width:10em;
+  width:25em;
 }
 
 .well{
@@ -82,61 +82,28 @@ h5{
 .navbar-right{padding-top: 0.8em;}
 
 .bank{
-margin-top: 2em;
+margin-top: 1em;
 }
 
-#bet_btn{
-  float:left;
-  width:6em;
-  display:inline;
-  position:absolute;
-  left:8em;
-  top:0.45em;
-}
-
-#bet_val{
-  float:left;
-  width:5em;
-  display:inline;
-  position:absolute;
-  margin-top: -0.2em;
-}
-#bet_btn2{
-  float:left;
-  width:6em;
-  display:inline;
-  position:absolute;
-  left:8em;
-  top:0.45em;
-  opacity:0;
-}
-
-#bet_val2{
-  float:left;
-  width:5em;
-  display:inline;
-  position:absolute;
-  margin-top: -0.2em;
-  opacity:0;
-}
 .hitform{
-margin-bottom: -2em;
+margin-bottom: -1em;
 ]}
 
 form#hit{
-  display: inline;
-  
+
 }
 form#hit input{
   width:5em;
-  margin-bottom:1em;
+  float: left;
+  
 }
 form#stay{
-  display: inline;
-
+   margin-left: 0.5em;
+   float: left;
 }
 
-form#stay input{  margin-bottom:1em;width:5em;
+form#stay input{  
+  width:5em;
 }
 
 .li{

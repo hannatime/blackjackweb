@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/contrib/all'
 
 set :sessions, true
 
@@ -281,7 +282,6 @@ post '/hit' do
   end
   
   erb :game
-   
 end
 
 # ------------- stay post
@@ -336,6 +336,7 @@ post '/new_game' do
   win_lose_draw
   @time_to_bet = true
   @show_player_account = true
+  session[:bet_amount].clear
  
   if session[:player_account] <= 0
     @error = "You're broke, go get a loan"
@@ -348,7 +349,7 @@ post '/new_game' do
     erb :game
   end
 
-  erb :game
+  redirect '/bet'
 end
 
 

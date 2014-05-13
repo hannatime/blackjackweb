@@ -1,6 +1,9 @@
+<div id = 'game'>
 <%if @show_everything%>
 <div class = "well">
-  <h5>Dealer Cards</h5>
+  <h5>Dealer Cards <%if @stay%>
+The dealer has <%=calculate_total(session[:dealer_cards])%>
+<%end%></h5>
   <%if !@stay%>
   <img src='/images/cards2/cover.png' class = 'card_image2'>
   <%=card_image(session[:dealer_cards][1])%>
@@ -11,43 +14,34 @@
 <%end%>
 <%end%>
 </div>
-<div class = "well">
-  <h5>Player Cards</h5>
+<div class = "well" id = 'player_area'>
+  <h5>Player Cards Your total is <%=calculate_total(session[:player_cards])%>.
+</h5>
 <%session[:player_cards].each do |card|%>
   <%=card_image(card)%>
 <%end%>
 </div>
-<div class = "text_box">
-<%if !@stay%>
-Your total is <%=calculate_total(session[:player_cards])%>.
 <%end%>
-<%if @stay%>
-Your total is <%=calculate_total(session[:player_cards])%>, the dealer has <%=calculate_total(session[:dealer_cards])%>
-<%end%>
-<%end%>
+
 <%if @play_again%>
-<form action = '/new_game' method ='post' class = ''>
-<input type ='submit' value ='PLAY AGAIN' class ='btn  btn-success btn-small' name ='new_game'>
+<form action = '/new_game' method ='post'>
+<input type ='submit' value ='PLAY AGAIN' class ='btn  btn-success btn-medium' name ='new_game'>
 </form>
 <%end%>   
 
 <%if @dealer_turn_button%>
-Click next for the dealers turn
 <form action = '/dealer_turn' method ='post' id = 'dealer_turn' class = ''>
-<input type ='submit' value ='Next' class ='btn btn-success btn-small hitform next2' name ='dealer_turn'>
+<input type ='submit' value ='DEALER TURN' class ='btn btn-info btn-medium' name ='dealer_turn'>
 </form>
 <%end%>
 
 <%if @show_hit_or_stay_buttons%>
-<br>
-<form action = '/hit' method ='post' id = 'hit' class = 'hitform'>
-<input type ='submit' value ='HIT' class ='btn btn-success btn-small' name ='hit'>
+<form action = '/hit' method ='post' id = 'hit' class = ''>
+<input type ='submit' value ='HIT' class ='btn btn-success btn-medium' name ='hit'>
 </form>
-
-<form action = '/stay' method ='post' id = 'stay' class = 'hitform'>
-<input type ='submit' value ='STAY' class ='btn btn-success btn-small' name ='stay'>
+<form action = '/stay' method ='post' id = 'stay' class = ''>
+<input type ='submit' value ='STAY' class ='btn btn-success btn-medium' name ='stay'>
 </form>
 <%end%>
-
 </div>
 
