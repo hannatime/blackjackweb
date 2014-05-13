@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/application.css">
   </head>
-  <body style="padding-top: 50px;">
+  <body style="padding-top: 60px;">
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
@@ -26,6 +26,25 @@
             <div class="nav navbar-nav navbar-right bank"> 
             Cash: $<%=session[:player_account]%>  Bet: $<%=session[:bet_amount]%>
           </div>
+          <%if @time_to_bet%>
+<div class="nav navbar-nav navbar-right bank"> 
+<form action = '/bet2' method ='post'>
+<input type ='text' class = 'hitform inputname bet_value' name ='bet_amount' id = 'bet_val'/>
+<br/>
+<input type ='submit' value = 'NEW BET'id = 'bet_btn' class ='hitform btn btn-small btn-success bet_button'>
+</form>
+</div>
+<%end%>
+
+<%if !@time_to_bet%>
+<div class="nav navbar-nav navbar-right bank"> 
+<form action = '/bet2' method ='post'>
+<input type ='text' class = 'hitform inputname bet_value' name ='bet_amount' id = 'bet_val2'/>
+<br/>
+<input type ='submit' value = 'NEW BET'id = 'bet_btn2' class ='hitform btn btn-small btn-success bet_button'>
+</form>
+</div>
+<%end%>
 
         </div>
       </div>
