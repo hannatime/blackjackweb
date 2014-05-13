@@ -29,7 +29,7 @@ helpers do
   end
   
   arr.select{|e| e == 'A'}.count.times do
-    total -= 10 if total > 21
+    total -= 10 if total > @win_number
   end
 
   total
@@ -47,50 +47,51 @@ helpers do
     player_total = calculate_total(session[:player_cards])
     dealer_total = calculate_total(session[:dealer_cards])
     
-    if player_total == 21 && @stay == false
-      @success = "You got Blackjack, you win!!"
-      @show_hit_or_stay_buttons = false
-      @win = true
-      bet_calc
-    elsif player_total > 21 && @stay == false
-      @error = "Sorry you busted!"
-      @show_hit_or_stay_buttons = false
-      @lose = true
-      bet_calc
-    elsif dealer_total > 21 && @stay == false
-      @error = "The dealer busted you win!"
-      @show_hit_or_stay_buttons = false
-      @win = true
-      bet_calc
-    elsif @stay
-        if dealer_total > 21
-        @error = "The dealer busted you win!"
+    if player_total == @win_number && @stay == false
+        @success = "You got Blackjack, you win!!"
         @show_hit_or_stay_buttons = false
         @win = true
         bet_calc
-        elsif player_total > 21
+    elsif player_total > @win_number && @stay == false
         @error = "Sorry you busted!"
         @show_hit_or_stay_buttons = false
         @lose = true
         bet_calc
-        elsif dealer_total == 21
-        @error = "The dealer got Blackjack, you lose!!"
-        @lose = true
-        bet_calc
-        @show_hit_or_stay_buttons = false
-        elsif player_total > dealer_total
-        @success = "You have #{player_total}, the dealer has #{dealer_total}, you win"
+    elsif dealer_total > @win_number && @stay == false
+        @error = "The dealer busted you win!"
         @show_hit_or_stay_buttons = false
         @win = true
         bet_calc
+    elsif @stay
+        if dealer_total > @win_number
+          @error = "The dealer busted you win!"
+          @show_hit_or_stay_buttons = false
+          @win = true
+          bet_calc
+        elsif player_total > @win_number
+          @error = "Sorry you busted!"
+          @show_hit_or_stay_buttons = false
+          @lose = true
+          bet_calc
+        elsif dealer_total == @win_number
+          @error = "The dealer got Blackjack, you lose!!"
+          @lose = true
+          bet_calc
+          @show_hit_or_stay_buttons = false
+        elsif player_total > dealer_total
+          @success = "You have #{player_total}, the dealer has #{dealer_total}, you win"
+          @show_hit_or_stay_buttons = false
+          @win = true
+          bet_calc
         elsif player_total < dealer_total
-        @error = "You have #{player_total}, the dealer has #{dealer_total}, you lose"
-        @show_hit_or_stay_buttons = false
-        @lose = true
-        bet_calc
+          @error = "You have #{player_total}, the dealer has #{dealer_total}, you lose"
+          @show_hit_or_stay_buttons = false
+          @lose = true
+          bet_calc
         elsif player_total == dealer_total
-        @error = "You have #{player_total}, the dealer has #{dealer_total}, it's a draw"
-        @show_hit_or_stay_buttons = false
+          @error = "You have #{player_total}, the dealer has #{dealer_total}, it's a draw"
+          @show_hit_or_stay_buttons = false
+          @play_again = true
         end
     end 
   end
@@ -142,6 +143,7 @@ before do
 @time_to_bet = false
 @show_everything = true
 @play_again = false
+@win_number = 21
 end
 # -------------
 # -------------
@@ -192,7 +194,7 @@ session[:player_cards] << session[:deck].pop
 session[:dealer_cards] << session[:deck].pop
 session[:player_cards] << session[:deck].pop
 session[:dealer_cards] << session[:deck].pop
-  if calculate_total(session[:player_cards]) == 21
+  if calculate_total(session[:player_cards]) == @win_number
     @success = "You got Blackjack, you win!!"
     @show_hit_or_stay_buttons = false
   end
@@ -252,29 +254,32 @@ end
 
 # ------------- hit post
 post '/hit' do
-   if session[:deck].count < 8 
-    new_deck
+  
+  if session[:deck].count < 8 
+      new_deck
   end
-   if session[:player_cards].count < 5
-   session[:player_cards] << session[:deck].pop
-   win_lose_draw
-  @new_player_button = true
-  @new_game_button = true
+
+  if session[:player_cards].count < 5
+    session[:player_cards] << session[:deck].pop
+    win_lose_draw
+    @new_player_button = true
+    @new_game_button = true
   else 
     @show_hit_or_stay_buttons = false
     @new_game_button = true
     @new_player_button = true
     @new_game_button = true
-  @show_hit_or_stay_buttons = false
-  @stay = true
-  while calculate_total(session[:dealer_cards]) < 17 && session[:dealer_cards].count < 5
-    session[:dealer_cards] << session[:deck].pop
-   end
-   win_lose_draw
-   erb :game
-   end
+    @show_hit_or_stay_buttons = false
+    @stay = true
+    
+    while calculate_total(session[:dealer_cards]) < 17 && session[:dealer_cards].count < 5
+      session[:dealer_cards] << session[:deck].pop
+    end
 
-   erb :game
+    win_lose_draw
+  end
+  
+  erb :game
    
 end
 
@@ -292,11 +297,13 @@ post '/dealer_turn' do
   @new_game_button = true
   @show_hit_or_stay_buttons = false
   @stay = true
+  
   while calculate_total(session[:dealer_cards]) < 17 && session[:dealer_cards].count < 5
     session[:dealer_cards] << session[:deck].pop
    end
-   win_lose_draw
-   erb :game
+
+  win_lose_draw
+  erb :game
 end
 
 # ------------- setname post
@@ -312,31 +319,35 @@ end
 
 # ------------- new game post
 post '/new_game' do
-@new_game_button = true
-if session[:deck].count < 10 
-    new_deck
+  @new_game_button = true
+  
+  if session[:deck].count < 10 
+      new_deck
   end
-session[:player_cards].clear
-session[:dealer_cards].clear
-session[:player_cards] << session[:deck].pop
-session[:dealer_cards] << session[:deck].pop
-session[:player_cards] << session[:deck].pop
-session[:dealer_cards] << session[:deck].pop
-@stay = false
-win_lose_draw
-@time_to_bet = true
-@show_player_account = true
-if session[:player_account] <= 0
-      @error = "You're broke, go get a loan"
-      @new_game_button = false
-      @new_player_button = true
-      @time_to_bet = false
-      @show_player_account = false
-      @show_hit_or_stay_buttons = false
-      @show_everything = false
-      erb :game
-    end
-erb :game
+
+  session[:player_cards].clear
+  session[:dealer_cards].clear
+  session[:player_cards] << session[:deck].pop
+  session[:dealer_cards] << session[:deck].pop
+  session[:player_cards] << session[:deck].pop
+  session[:dealer_cards] << session[:deck].pop
+  @stay = false
+  win_lose_draw
+  @time_to_bet = true
+  @show_player_account = true
+ 
+  if session[:player_account] <= 0
+    @error = "You're broke, go get a loan"
+    @new_game_button = false
+    @new_player_button = true
+    @time_to_bet = false
+    @show_player_account = false
+    @show_hit_or_stay_buttons = false
+    @show_everything = false
+    erb :game
+  end
+  
+  erb :game
 end
 
 

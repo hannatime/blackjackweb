@@ -11,23 +11,21 @@
 <%end%>
 <%end%>
 </div>
-
 <div class = "well">
   <h5>Player Cards</h5>
 <%session[:player_cards].each do |card|%>
   <%=card_image(card)%>
 <%end%>
 </div>
-
 <div class = "text_box">
-Your total is <%=calculate_total(session[:player_cards])%>, the dealer has <%=calculate_total(session[:dealer_cards])%>
-Your bet is $<%=session[:bet_amount].to_s%>.
+<%if !@stay%>
+Your total is <%=calculate_total(session[:player_cards])%>.
 <%end%>
-<%if @show_player_account%>
-<br>You have $<%=session[:player_account]%> in the bank.
+<%if @stay%>
+Your total is <%=calculate_total(session[:player_cards])%>, the dealer has <%=calculate_total(session[:dealer_cards])%>
+<%end%>
 <%end%>
 <br>
-
 <%if @play_again%>
 <form action = '/new_game' method ='post' class = ''>
 <input type ='submit' value ='PLAY AGAIN' class ='btn btn-success btn-small' name ='new_game'>
@@ -42,7 +40,6 @@ Click next for the dealers turn
 <%end%>
 
 <%if @show_hit_or_stay_buttons%>
-What would you like to do?<br>
 <form action = '/hit' method ='post' id = 'hit' class = 'hitform'>
 <input type ='submit' value ='HIT' class ='btn btn-success btn-small' name ='hit'>
 </form>
@@ -53,11 +50,13 @@ What would you like to do?<br>
 <%end%>
 
 <%if @time_to_bet%>
- <br>New Bet Amount:
+ <br>Change Bet Amount:
 <form action = '/bet2' method ='post'>
 <input type ='text' class = 'hitform inputname' name ='bet_amount' id = 'bet_val'/>
 <br/>
 <input type ='submit' value = 'CHANGE BET'id = 'bet_btn' class ='hitform btn btn-small btn-success'>
 </form>
 <%end%>
+
 </div>
+

@@ -10,7 +10,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-            <ul class="nav">
+            <ul class="nav navbar-nav navbar-left">
               <%if @new_game_button%>
 <li><form action = '/new_game' method ='post' id = 'new_game' class = 'hitform new_game'>
 <input type ='submit' value ='PLAY AGAIN' class ='btn btn-success btn-small' name ='new_game'>
@@ -23,6 +23,10 @@
 </form></li>
 <%end%>
             </ul>
+            <div class="nav navbar-nav navbar-right bank"> 
+            Cash: $<%=session[:player_account]%>  Bet: $<%=session[:bet_amount]%>
+          </div>
+
         </div>
       </div>
     </div>
@@ -35,7 +39,8 @@
     <%if @success%>
       <div class="alert alert-success"><%=@success%></div>
     <% end %>
-  <img src="/images/background/blackjack.png" class = 'front_page'>
   </div>
   </body>
+  <img src="/images/background/blackjack.png" class = 'front_page'>
 </html>
+
