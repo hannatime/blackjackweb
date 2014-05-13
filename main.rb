@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'sinatra'
-require 'sinatra/contrib/all'
-require 'pry'
+
 
 set :sessions, true
 
@@ -346,7 +345,7 @@ post '/new_game' do
     @show_everything = false
     erb :game
   end
-  
+
   erb :game
 end
 
