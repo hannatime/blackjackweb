@@ -99,7 +99,7 @@ helpers do
     if @win == true
       session[:player_account] += session[:bet_amount].to_i
       @show_player_account = true
-      @play_again = true 
+      @play_again = true    
     elsif @lose == true
       session[:player_account] -= session[:bet_amount].to_i
       @show_player_account = true
@@ -134,7 +134,7 @@ before do
 @stay = false
 @show_hit_or_stay_buttons = true
 @dealers_turn_button = false
-@new_game_button = true
+@new_game_button = false
 @new_player_button = true
 @show_player_account = false
 @win = false
@@ -233,29 +233,6 @@ post '/bet' do
   redirect :game
 end
 
-post '/bet2' do
-  if params[:bet_amount].empty?
-    @error = "No bet to change, add a bet"
-    @time_to_bet = true
-    @show_player_account = true
-    halt erb(:game)
-  elsif
-    params[:bet_amount].to_i < 1
-    @error = "The minimum bet is $1"
-    @time_to_bet = true
-    @show_player_account = true
-    halt erb(:game)
-  elsif 
-    params[:bet_amount].to_i > session[:player_account]
-    @error = "You don't have enough money, reduce your bet"
-    @show_player_account = true
-    @time_to_bet = true
-    halt erb(:game)
-  end
-  session[:bet_amount] = params[:bet_amount] 
-  erb :game
-end
-
 # ------------- hit post
 post '/hit' do
   
@@ -305,6 +282,7 @@ post '/dealer_turn' do
    end
   @stay = true
   win_lose_draw
+
   erb :game, layout: false
 end
 
@@ -312,6 +290,8 @@ end
 post '/set_name' do
   if params[:player_name].empty?
     @error = "You need a name to play"
+    @new_player_button = false
+    @bank = false
     halt erb(:"/players/set_name")
   end
   session[:player_name] = params[:player_name].capitalize
@@ -358,5 +338,6 @@ end
 post '/new_player' do
   session.clear
   @new_player_button = false
+  @bank = false
   redirect '/set_name'
 end
