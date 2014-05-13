@@ -142,6 +142,7 @@ before do
 @show_everything = true
 @play_again = false
 @win_number = 21
+@bank = true
 end
 # -------------
 # -------------
@@ -171,6 +172,7 @@ end
 # ------------- bet page
 get '/bet' do 
   @new_game_button = false
+  @bank = false
   erb :bet
 end
 
@@ -179,6 +181,7 @@ get '/set_name' do
 session[:player_account] = 500
 @new_game_button = false
 @new_player_button = false
+@bank = false
 erb :"/players/set_name"
 end
 

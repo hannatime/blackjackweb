@@ -12,40 +12,43 @@
         <div class="container">
             <ul class="nav navbar-nav navbar-left">
               <%if @new_game_button%>
-<li><form action = '/new_game' method ='post' id = 'new_game' class = 'hitform new_game'>
-<input type ='submit' value ='PLAY AGAIN' class ='btn btn-success btn-small' name ='new_game'>
-</form></li>
-<%end%>   
+                <li><form action = '/new_game' method ='post' id = 'new_game' class = 'hitform new_game'>
+                <input type ='submit' value ='PLAY AGAIN' class ='btn btn-success btn-small' name ='new_game'>
+                </form></li>
+                <%end%>   
 
-<%if @new_player_button%>
-<li><form action = '/new_player' method ='post' id = 'new_player' class = 'hitform'>
-<input type ='submit' value ='NEW PLAYER' class ='btn btn-success btn-small' name ='new_player'>
-</form></li>
-<%end%>
-            </ul>
-            <div class="nav navbar-nav navbar-right bank"> 
-            Cash: $<%=session[:player_account]%>  Bet: $<%=session[:bet_amount]%>
-          </div>
-          <%if @time_to_bet%>
-<div class="nav navbar-nav navbar-right bank"> 
-<form action = '/bet2' method ='post'>
-<input type ='text' class = 'hitform inputname bet_value' name ='bet_amount' id = 'bet_val'/>
-<br/>
-<input type ='submit' value = 'NEW BET'id = 'bet_btn' class ='hitform btn btn-small btn-success bet_button'>
-</form>
-</div>
-<%end%>
+                <%if @new_player_button%>
+                <li><form action = '/new_player' method ='post' id = 'new_player' class = 'hitform'>
+                <input type ='submit' value ='NEW PLAYER' class ='btn btn-success btn-small' name ='new_player'>
+                </form></li>
+                <%end%>
 
-<%if !@time_to_bet%>
-<div class="nav navbar-nav navbar-right bank"> 
-<form action = '/bet2' method ='post'>
-<input type ='text' class = 'hitform inputname bet_value' name ='bet_amount' id = 'bet_val2'/>
-<br/>
-<input type ='submit' value = 'NEW BET'id = 'bet_btn2' class ='hitform btn btn-small btn-success bet_button'>
-</form>
-</div>
-<%end%>
+                <%if @bank%>
+                  </ul>
+                  <div class="nav navbar-nav navbar-right bank"> 
+                  Cash: $<%=session[:player_account]%>  Bet: $<%=session[:bet_amount]%>
+                </div>
+                <%end%>
 
+                <%if @time_to_bet%>
+                <div class="nav navbar-nav navbar-right bank"> 
+                <form action = '/bet2' method ='post'>
+                <input type ='text' class = 'hitform inputname bet_value' name ='bet_amount' id = 'bet_val'/>
+                <br/>
+                <input type ='submit' value = 'NEW BET'id = 'bet_btn' class ='hitform btn btn-small btn-success bet_button'>
+                </form>
+                </div>
+                <%end%>
+
+                <%if !@time_to_bet%>
+                <div class="nav navbar-nav navbar-right bank"> 
+                <form action = '/bet2' method ='post'>
+                <input type ='text' class = 'hitform inputname bet_value' name ='bet_amount' id = 'bet_val2'/>
+                <br/>
+                <input type ='submit' value = 'NEW BET'id = 'bet_btn2' class ='hitform btn btn-small btn-success bet_button'>
+                </form>
+                </div>
+                <%end%>
         </div>
       </div>
     </div>
