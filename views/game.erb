@@ -43,5 +43,12 @@ The dealer has <%=calculate_total(session[:dealer_cards])%>
 <input type ='submit' value ='STAY' class ='btn btn-success btn-medium' name ='stay'>
 </form>
 <%end%>
+    
+    <%if @loser%>
+      <div class="alert alert-error"><%=@loser%></div>
+    <% end %>
+    <%if @winner%>
+      <div class="alert alert-success"><%=@winner%></div>
+    <% end %>
 </div>
 

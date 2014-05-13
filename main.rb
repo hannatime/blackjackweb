@@ -47,48 +47,48 @@ helpers do
     dealer_total = calculate_total(session[:dealer_cards])
     
     if player_total == @win_number && @stay == false
-        @success = "You got Blackjack, you win!!"
         @show_hit_or_stay_buttons = false
+        @winner = "You got Blackjack, you win!!"
         @win = true
         bet_calc
     elsif player_total > @win_number && @stay == false
-        @error = "Sorry you busted!"
+        @loser = "Sorry you busted!"
         @show_hit_or_stay_buttons = false
         @lose = true
         bet_calc
     elsif dealer_total > @win_number && @stay == false
-        @error = "The dealer busted you win!"
+        @winner = "The dealer busted you win!"
         @show_hit_or_stay_buttons = false
         @win = true
         bet_calc
     elsif @stay
         if dealer_total > @win_number
-          @error = "The dealer busted you win!"
+          @winner = "The dealer busted you win!"
           @show_hit_or_stay_buttons = false
           @win = true
           bet_calc
         elsif player_total > @win_number
-          @error = "Sorry you busted!"
+          @loser = "Sorry you busted!"
           @show_hit_or_stay_buttons = false
           @lose = true
           bet_calc
         elsif dealer_total == @win_number
-          @error = "The dealer got Blackjack, you lose!!"
+          @loser = "The dealer got Blackjack, you lose!!"
           @lose = true
           bet_calc
           @show_hit_or_stay_buttons = false
         elsif player_total > dealer_total
-          @success = "You have #{player_total}, the dealer has #{dealer_total}, you win"
+          @winner = "You have #{player_total}, the dealer has #{dealer_total}, you win"
           @show_hit_or_stay_buttons = false
           @win = true
           bet_calc
         elsif player_total < dealer_total
-          @error = "You have #{player_total}, the dealer has #{dealer_total}, you lose"
+          @loser = "You have #{player_total}, the dealer has #{dealer_total}, you lose"
           @show_hit_or_stay_buttons = false
           @lose = true
           bet_calc
         elsif player_total == dealer_total
-          @error = "You have #{player_total}, the dealer has #{dealer_total}, it's a draw"
+          @loser = "You have #{player_total}, the dealer has #{dealer_total}, it's a draw"
           @show_hit_or_stay_buttons = false
           @play_again = true
         end
@@ -144,6 +144,8 @@ before do
 @play_again = false
 @win_number = 21
 @bank = true
+@winner = false
+@loser = false
 end
 # -------------
 # -------------
@@ -281,7 +283,7 @@ post '/hit' do
     win_lose_draw
   end
   
-  erb :game
+  erb :game, layout: false
 end
 
 # ------------- stay post
@@ -291,20 +293,19 @@ post '/stay' do
    @dealer_turn_button = true
    @new_game_button = true
    win_lose_draw
-   erb :game
+   erb :game, layout: false
 end
 
 post '/dealer_turn' do
   @new_game_button = true
   @show_hit_or_stay_buttons = false
-  @stay = true
-  
+
   while calculate_total(session[:dealer_cards]) < 17 && session[:dealer_cards].count < 5
     session[:dealer_cards] << session[:deck].pop
    end
-
+  @stay = true
   win_lose_draw
-  erb :game
+  erb :game, layout: false
 end
 
 # ------------- setname post

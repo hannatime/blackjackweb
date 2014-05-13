@@ -55,10 +55,11 @@ width: 38em;
 .name_btn{
   display: inline;
 }
-.card_image{v
+.card_image{
 margin-left:0.1em; 
 margin-right:0.1em;
 height:10em;
+opacity:0.8;
 
 }
 
